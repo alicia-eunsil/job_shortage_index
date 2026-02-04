@@ -20,13 +20,23 @@ CSV_PATH = BASE_DIR / "sample_2.csv"    # ✅ 추가
 df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
 
 def set_korean_font():
-    font_path = BASE_DIR / "fonts" / "NanumGothic.ttf"  # 파일명 정확히!
-   
-    if font_path.exists():
+    font_path = BASE_DIR / "fonts" / "NanumGothic.ttf"
+
+    plt.rcParams["axes.unicode_minus"] = False
+
+    # 폰트 없거나, 너무 작으면(=LFS 포인터/깨짐) 스킵
+    if not font_path.exists():
+        return
+    if font_path.stat().st_size < 10_000:   # 10KB 미만이면 폰트일 가능성 거의 없음
+        return
+
+    try:
         fm.fontManager.addfont(str(font_path))
         font_name = fm.FontProperties(fname=str(font_path)).get_name()
         plt.rcParams["font.family"] = font_name
-    plt.rcParams["axes.unicode_minus"] = False
+    except Exception:
+        # 폰트 로딩 실패해도 앱은 계속 실행
+        return
 
 set_korean_font()
 
@@ -440,6 +450,7 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
