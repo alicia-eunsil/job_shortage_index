@@ -12,9 +12,19 @@ import warnings
 from pathlib import Path
 warnings.filterwarnings("ignore")
 
+# ===================================
+# 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
+# ===================================
+BASE_DIR = Path(__file__).resolve().parent
+CSV_PATH = BASE_DIR / "sample_2.csv"    # ✅ 추가
+df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
+
 def set_korean_font():
-    base_dir = Path(__file__).resolve().parent
-    font_path = base_dir / "fonts" / "NanumGothic.ttf"  # 파일명 정확히!
+    font_path = BASE_DIR / "fonts" / "NanumGothic.ttf"  # 파일명 정확히!
+
+    st.write("font exists:", font_path.exists(), "size:", font_path.stat().st_size if font_path.exists() else None)
+    st.write("head:", font_path.read_text(errors="ignore")[:200])  # 텍스트로 읽히면 거의 LFS 포인터임
+    
     if font_path.exists():
         fm.fontManager.addfont(str(font_path))
         font_name = fm.FontProperties(fname=str(font_path)).get_name()
@@ -23,12 +33,7 @@ def set_korean_font():
 
 set_korean_font()
 
-# ===================================
-# 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
-# ===================================
-BASE_DIR = Path(__file__).resolve().parent
-CSV_PATH = BASE_DIR / "sample_2.csv"    # ✅ 추가
-df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
+
 
 # 필수 컬럼 체크
 required_cols = ["sigungu", "ksic1_code", "jobbig_code", "mdate", "S", "A", "L"]
@@ -438,6 +443,7 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
