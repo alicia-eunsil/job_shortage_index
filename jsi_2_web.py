@@ -5,15 +5,23 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from pandas.tseries.offsets import MonthEnd, MonthBegin
 import streamlit as st
 import warnings
 from pathlib import Path
 warnings.filterwarnings("ignore")
 
-#plt.rcParams["font.family"] = "Malgun Gothic"
-#plt.rcParams["axes.unicode_minus"] = False
+def set_korean_font():
+    base_dir = Path(__file__).resolve().parent
+    font_path = base_dir / "fonts" / "NanumGothic.ttf"  # 파일명 정확히!
+    if font_path.exists():
+        fm.fontManager.addfont(str(font_path))
+        font_name = fm.FontProperties(fname=str(font_path)).get_name()
+        plt.rcParams["font.family"] = font_name
+    plt.rcParams["axes.unicode_minus"] = False
 
+set_korean_font()
 
 # ===================================
 # 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
@@ -430,6 +438,7 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
