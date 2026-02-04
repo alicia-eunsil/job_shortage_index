@@ -19,7 +19,6 @@ plt.rcParams["axes.unicode_minus"] = False
 # 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
 # ===================================
 BASE_DIR = Path(__file__).resolve().parent
-DATA_FILE = r"sample_2.csv"
 CSV_PATH = BASE_DIR / "sample_1.csv"    # ✅ 추가
 df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
 
@@ -431,5 +430,6 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
