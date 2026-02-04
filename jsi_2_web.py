@@ -447,9 +447,10 @@ else:
             ksic1_code=KSIC_FIXED,
             jobbig_code=JOBBIG_FIXED,
             y_var=y_var,
-            plot_start="2018-01-01"
+            plot_start="2021-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
