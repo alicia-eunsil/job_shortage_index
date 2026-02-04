@@ -11,8 +11,8 @@ import warnings
 from pathlib import Path
 warnings.filterwarnings("ignore")
 
-plt.rcParams["font.family"] = "Malgun Gothic"
-plt.rcParams["axes.unicode_minus"] = False
+#plt.rcParams["font.family"] = "Malgun Gothic"
+#plt.rcParams["axes.unicode_minus"] = False
 
 
 # ===================================
@@ -430,6 +430,7 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
