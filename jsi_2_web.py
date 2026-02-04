@@ -21,10 +21,7 @@ df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의�
 
 def set_korean_font():
     font_path = BASE_DIR / "fonts" / "NanumGothic.ttf"  # 파일명 정확히!
-
-    st.write("font exists:", font_path.exists(), "size:", font_path.stat().st_size if font_path.exists() else None)
-    st.write("head:", font_path.read_text(errors="ignore")[:200])  # 텍스트로 읽히면 거의 LFS 포인터임
-    
+   
     if font_path.exists():
         fm.fontManager.addfont(str(font_path))
         font_name = fm.FontProperties(fname=str(font_path)).get_name()
@@ -443,6 +440,7 @@ else:
             plot_start="2018-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
