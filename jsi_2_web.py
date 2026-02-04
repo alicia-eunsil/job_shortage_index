@@ -382,6 +382,7 @@ def plot_one(df_all, *, sigungu, ksic1_code, jobbig_code,
         ax.plot(g["mdate"], g["Sign_Crisis"], label="위기선(rolling mean-2.0σ)")
 
     # ✅ 장기(수평) 주의/위기선
+    '''
     if "Long_warning" in g.columns and g["Long_warning"].notna().any():
         lw = g["Long_warning"].dropna().iloc[0]
         ax.hlines(lw,
@@ -389,6 +390,7 @@ def plot_one(df_all, *, sigungu, ksic1_code, jobbig_code,
                   xmax=g["mdate"].max() + MonthEnd(1),
                   linestyles=":", linewidth=1.8,
                   label="장기주의선(최근36개월 평균)")
+    '''
 
     if "Crisis_SS" in g.columns and g["Crisis_SS"].notna().any():
         ss = g["Crisis_SS"].dropna().iloc[0]
@@ -450,6 +452,7 @@ else:
             plot_start="2021-01-01"
         )
         st.pyplot(fig, clear_figure=True)
+
 
 
 
