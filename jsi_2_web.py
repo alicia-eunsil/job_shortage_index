@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 # 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
 # ===================================
 BASE_DIR = Path(__file__).resolve().parent
-CSV_PATH = BASE_DIR / "sample_2.csv"    # ✅ 추가
+CSV_PATH = BASE_DIR / "sample_3.csv"    # ✅ 추가
 df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
 
 def set_korean_font():
