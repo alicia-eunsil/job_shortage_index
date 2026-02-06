@@ -1,29 +1,44 @@
 # 예측모형 arima 적용 함수 추가
 
-# ===================================
-# 0) Packages
-# ===================================
 import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from pandas.tseries.offsets import MonthEnd, MonthBegin
 import streamlit as st
 import warnings
+from pathlib import Path
 warnings.filterwarnings("ignore")
-
-plt.rcParams["font.family"] = "Malgun Gothic"
-plt.rcParams["axes.unicode_minus"] = False
-
 
 # ===================================
 # 1) CSV 데이터 불러오기  (★ 여기 포함 / ★ 버그 수정)
 # ===================================
-BASE_DIR  = r"C:\Users\USER\Desktop\PY_FILES\#shortage_index"
-DATA_FILE = r"sample_3.csv"
-
-CSV_PATH = os.path.join(BASE_DIR, DATA_FILE)   # ✅ 추가
+BASE_DIR = Path(__file__).resolve().parent
+CSV_PATH = BASE_DIR / "sample_3.csv"    # ✅ 추가
 df_raw = pd.read_csv(CSV_PATH)                 # ✅ 수정 (CSV_PATH가 정의되어 있어야 함)
+
+def set_korean_font():
+    font_path = BASE_DIR / "fonts" / "NanumGothic.ttf"
+
+    plt.rcParams["axes.unicode_minus"] = False
+
+    # 폰트 없거나, 너무 작으면(=LFS 포인터/깨짐) 스킵
+    if not font_path.exists():
+        return
+    if font_path.stat().st_size < 10_000:   # 10KB 미만이면 폰트일 가능성 거의 없음
+        return
+
+    try:
+        fm.fontManager.addfont(str(font_path))
+        font_name = fm.FontProperties(fname=str(font_path)).get_name()
+        plt.rcParams["font.family"] = font_name
+    except Exception:
+        # 폰트 로딩 실패해도 앱은 계속 실행
+        return
+
+set_korean_font()
+
 
 # 필수 컬럼 체크
 required_cols = ["sigungu", "ksic1_code", "jobbig_code", "mdate", "S", "A", "L"]
@@ -653,3 +668,4 @@ else:
                     plot_start="2021-01-01"
                 )
                 st.pyplot(fig, clear_figure=True)
+
